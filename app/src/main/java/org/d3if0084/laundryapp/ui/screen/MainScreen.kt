@@ -42,11 +42,11 @@ import org.d3if0084.laundryapp.ui.theme.LaundryAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(){
-    Scaffold (
+fun MainScreen() {
+    Scaffold(
         topBar = {
             TopAppBar(
-                title ={
+                title = {
                     Text(text = stringResource(id = R.string.app_name))
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -55,7 +55,7 @@ fun MainScreen(){
                 )
             )
         }
-    ){padding ->
+    ) { padding ->
         ScreenContent(Modifier.padding(padding))
     }
 }
@@ -63,6 +63,7 @@ fun MainScreen(){
 @Composable
 fun ScreenContent(modifier: Modifier) {
     var berat by remember { mutableStateOf("") }
+    var totalBiaya by remember { mutableStateOf(0) }
 
     val radiOptions = listOf(
         stringResource(id = R.string.normal),
@@ -70,14 +71,14 @@ fun ScreenContent(modifier: Modifier) {
     )
     var waktu by remember { mutableStateOf(radiOptions[0]) }
 
-    Column (
+    Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
         Text(
             text = stringResource(id = R.string.app_intro),
             style = MaterialTheme.typography.bodyLarge,
@@ -85,9 +86,9 @@ fun ScreenContent(modifier: Modifier) {
         )
         OutlinedTextField(
             value = berat,
-            onValueChange = {berat = it},
-            label = { Text(text = stringResource(R.string.berat_laundry))},
-            trailingIcon = { Text(text = "Kg")},
+            onValueChange = { berat = it },
+            label = { Text(text = stringResource(R.string.berat_laundry)) },
+            trailingIcon = { Text(text = "Kg") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Number,
@@ -99,20 +100,21 @@ fun ScreenContent(modifier: Modifier) {
         Text(
             text = stringResource(id = R.string.waktu_kerja),
             style = MaterialTheme.typography.bodyLarge,
-            modifier = modifier.fillMaxWidth())
-        Row (
+            modifier = modifier.fillMaxWidth()
+        )
+        Row(
             modifier = Modifier
                 .padding(top = 6.dp)
                 .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-        ){
-            radiOptions.forEach{ text ->
+        ) {
+            radiOptions.forEach { text ->
                 WaktuPengerjaan(
-                    label =text,
+                    label = text,
                     isSelected = waktu == text,
                     modifier = Modifier
                         .selectable(
                             selected = waktu == text,
-                            onClick = { waktu = waktu },
+                            onClick = { waktu = text },
                             role = Role.RadioButton
                         )
                         .weight(1f)
@@ -120,25 +122,57 @@ fun ScreenContent(modifier: Modifier) {
                 )
             }
         }
-        Button(
-            onClick = {},
-            modifier = Modifier.padding(top = 8.dp),
-            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+
+        Row(
+            modifier = Modifier
+                .padding(top = 6.dp)
         ) {
-            Text(text = stringResource(id = R.string.hitung))
+            Button(
+                onClick = {
+                    val beratLaundry = berat.toIntOrNull() ?: 0
+                    totalBiaya = if (waktu == radiOptions[0]) {
+                        beratLaundry * 5000 // Normal
+                    } else {
+                        beratLaundry * 7000 // Express
+                    }
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(id = R.string.hitung))
+            }
+
+            Button(
+                onClick = {
+                    berat = ""
+                    totalBiaya = 0
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = "Reset")
+            }
+        }
+
+        if (totalBiaya > 0) {
+            Text(
+                text = "Total Biaya: Rp $totalBiaya",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
     }
 }
 
 @Composable
-fun WaktuPengerjaan(label:String, isSelected: Boolean, modifier: Modifier){
-    Row (
-     modifier = modifier,
+fun WaktuPengerjaan(label: String, isSelected: Boolean, modifier: Modifier) {
+    Row(
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         RadioButton(selected = isSelected, onClick = null)
         Text(
-            text =label,
+            text = label,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(start = 8.dp)
         )
