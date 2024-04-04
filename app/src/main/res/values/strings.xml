@@ -6,5 +6,9 @@
     <string name="waktu_kerja">Waktu Pengerjaan</string>
     <string name="normal">Normal</string>
     <string name="express">Express</string>
+    <string name="kembali">Kembali</string>
     <string name="hitung">Hitung</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="penjelasan">LaundryApp adalah aplikasi yang memudahkan pengguna
+        dalam mengetahui total biaya jasa laundry yang harus dibayarkan.\n\nDibuat Oleh Muhammad Fadhlan Jamil\n\nD3IF 46-02</string>
 </resources>
