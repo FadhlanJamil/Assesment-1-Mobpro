@@ -4,11 +4,15 @@
         dalam mengetahui total biaya jasa laundry yang harus dibayarkan.\n\nCoba Hitung Sekarang! </string>
     <string name="berat_laundry">Berat Laundry</string>
     <string name="waktu_kerja">Waktu Pengerjaan</string>
+    <string name="total_biaya">Total Biaya: Rp.</string>
     <string name="normal">Normal</string>
     <string name="express">Express</string>
     <string name="kembali">Kembali</string>
+    <string name="reset">Reset</string>
     <string name="hitung">Hitung</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
     <string name="penjelasan">LaundryApp adalah aplikasi yang memudahkan pengguna
-        dalam mengetahui total biaya jasa laundry yang harus dibayarkan.\n\nDibuat Oleh Muhammad Fadhlan Jamil\n\nD3IF 46-02</string>
+        dalam mengetahui total biaya jasa laundry yang harus dibayarkan.\nAplikasi ini dibuat oleh Muhammad Fadhlan Jamil\nD3IF46-02 </string>
+    <string name="bagikan">Bagikan</string>
+    <string name="bagikan_template">Berat Laundry: %1$s Kg\nWaktu Pengerjaan: %2$s \nTotal Biaya: %3$d</string>
 </resources>

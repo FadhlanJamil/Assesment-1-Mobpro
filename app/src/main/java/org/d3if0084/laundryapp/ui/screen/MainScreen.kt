@@ -1,5 +1,7 @@
 package org.d3if0084.laundryapp.ui.screen
 
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -29,12 +31,14 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -80,7 +84,7 @@ fun MainScreen(navController: NavHostController) {
 @Composable
 fun ScreenContent(modifier: Modifier) {
     var berat by rememberSaveable { mutableStateOf("") }
-    var totalBiaya by rememberSaveable { mutableStateOf(0) }
+    var totalBiaya by rememberSaveable { mutableIntStateOf(0) }
 
     val radiOptions = listOf(
         stringResource(id = R.string.normal),
@@ -88,6 +92,7 @@ fun ScreenContent(modifier: Modifier) {
     )
     var waktu by rememberSaveable { mutableStateOf(radiOptions[0]) }
 
+    val context = LocalContext.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -148,9 +153,9 @@ fun ScreenContent(modifier: Modifier) {
                 onClick = {
                     val beratLaundry = berat.toIntOrNull() ?: 0
                     totalBiaya = if (waktu == radiOptions[0]) {
-                        beratLaundry * 5000 // Normal
+                        beratLaundry * 5000
                     } else {
-                        beratLaundry * 7000 // Express
+                        beratLaundry * 7000
                     }
                 },
                 modifier = Modifier.padding(top = 8.dp),
@@ -167,17 +172,30 @@ fun ScreenContent(modifier: Modifier) {
                 modifier = Modifier.padding(top = 8.dp),
                 contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
             ) {
-                Text(text = "Reset")
+                Text(text = stringResource(id = R.string.reset))
             }
         }
-
         if (totalBiaya > 0) {
             Text(
-                text = "Total Biaya: Rp $totalBiaya",
+                text = stringResource(id = R.string.total_biaya,totalBiaya),
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(top = 16.dp)
             )
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = context.getString(R.string.bagikan_template,
+                            berat,waktu,totalBiaya)
+                    )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(id = R.string.bagikan))
+            }
         }
+
     }
 }
 
@@ -193,6 +211,16 @@ fun WaktuPengerjaan(label: String, isSelected: Boolean, modifier: Modifier) {
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(start = 8.dp)
         )
+    }
+}
+
+private fun shareData(context: Context, message: String){
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT,message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) !=null){
+        context.startActivity(shareIntent)
     }
 }
 
