@@ -14,4 +14,5 @@
     <string name="penjelasan">LaundryApp is an application that makes it easier for users to find out the total cost of laundry services that must be paid.\\nThis application was created by Muhammad Fadhlan Jamil\\nD3IF46-02</string>
     <string name="bagikan">Share</string>
     <string name="bagikan_template">Laundry Weight: %1$s Kg\\nWorking Time: %2$s \\nTotal Cost: %3$d</string>
+    <string name="input_invalid">Can not be empty</string>
 </resources>

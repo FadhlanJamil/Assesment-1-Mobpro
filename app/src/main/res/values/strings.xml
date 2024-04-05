@@ -4,10 +4,11 @@
         dalam mengetahui total biaya jasa laundry yang harus dibayarkan.\n\nCoba Hitung Sekarang! </string>
     <string name="berat_laundry">Berat Laundry</string>
     <string name="waktu_kerja">Waktu Pengerjaan</string>
-    <string name="total_biaya">Total Biaya: Rp.</string>
+    <string name="total_biaya">Total Biaya: Rp %d</string>
     <string name="normal">Normal</string>
     <string name="express">Express</string>
     <string name="kembali">Kembali</string>
+    <string name="input_invalid">Tidak Boleh Kosong</string>
     <string name="reset">Reset</string>
     <string name="hitung">Hitung</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>

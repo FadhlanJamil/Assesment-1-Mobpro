@@ -84,6 +84,8 @@ fun MainScreen(navController: NavHostController) {
 @Composable
 fun ScreenContent(modifier: Modifier) {
     var berat by rememberSaveable { mutableStateOf("") }
+
+
     var totalBiaya by rememberSaveable { mutableIntStateOf(0) }
 
     val radiOptions = listOf(
@@ -174,6 +176,7 @@ fun ScreenContent(modifier: Modifier) {
             ) {
                 Text(text = stringResource(id = R.string.reset))
             }
+
         }
         if (totalBiaya > 0) {
             Text(
